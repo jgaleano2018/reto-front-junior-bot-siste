@@ -1,1 +1,103 @@
-<p>product works!</p>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+     
+      <div class="form-group">
+        <label>Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+        />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Name is required</div>
+          <div *ngIf="f.name.errors.minlength">
+            Name must be at least 1 characters
+          </div>
+          <div *ngIf="f.name.errors.maxlength">
+            Name must not exceed 50 characters
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>In Inventory</label>
+        <input
+          type="number"
+          formControlName="inInventory"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.inInventory.errors }"
+        />
+        <div *ngIf="submitted && f.inInventory.errors" class="invalid-feedback">
+          <div *ngIf="f.inInventory.errors.required">InInventory is required</div>
+          <div *ngIf="f.inInventory.errors.minlength">
+            InInventory must be at least 1 characters
+          </div>
+          <div *ngIf="f.inInventory.errors.maxlength">
+            InInventory must not exceed 10 characters
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>Min</label>
+        <input
+          type="number"
+          formControlName="min"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.min.errors }"
+        />
+        <div *ngIf="submitted && f.min.errors" class="invalid-feedback">
+          <div *ngIf="f.min.errors.required">Min is required</div>
+          <div *ngIf="f.min.errors.minlength">
+            Min must be at least 1 characters
+          </div>
+          <div *ngIf="f.min.errors.maxlength">
+            Min must not exceed 10 characters
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="form-group">
+        <label>Max</label>
+        <input
+          type="number"
+          formControlName="max"
+          class="form-control"
+          [ngClass]="{ 'is-axvalid': submitted && f.max.errors }"
+        />
+        <div *ngIf="submitted && f.max.errors" class="invalid-feedback">
+          <div *ngIf="f.max.errors.required">Max is required</div>
+          <div *ngIf="f.max.errors.maxlength">
+            Max must be at least 1 characters
+          </div>
+          <div *ngIf="f.max.errors.maxlength">
+            Max must not exceed 10 characters
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>Enabled</label>
+        <input type="checkbox"
+        formControlName="enabled"
+        class="form-control"
+        checked>
+        <label for="scales">Scales</label>      
+      </div>
+      
+     
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Register</button>
+        <button
+          type="button"
+          (click)="onReset()"
+          class="btn btn-warning float-right"
+        >
+          Reset
+        </button>
+      </div>
+</form>
