@@ -15,6 +15,7 @@ export class ProductComponent implements OnInit {
   dominio: any;
   countryFilter: any;
   productArray: Product[];
+  module: string;
 
   constructor(private formBuilder: FormBuilder) {
     this.setForm();
@@ -78,7 +79,10 @@ export class ProductComponent implements OnInit {
       return;
     }
 
-
+    if (this.module == "CreateProduct")
+    {
+      
+    }
     /*this.productService.getProduct().subscribe(data => {
       this.productArray = data as Product[]
     });
