@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/data/interface/product.interface';
 
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
