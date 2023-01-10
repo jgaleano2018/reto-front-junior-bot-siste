@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product.component';
 
 /**
- * Modulo que registra los submodulos que se importan desde el component HomeComponent.
+ * Modulo que registra los submodulos que se importan desde el component ProductComponent.
  */
 @NgModule({
   declarations: [ ProductComponent ],

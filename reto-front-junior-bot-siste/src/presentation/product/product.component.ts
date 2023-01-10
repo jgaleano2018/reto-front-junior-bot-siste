@@ -1,7 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/data/interface/product.interface';
+import { ProductService } from 'src/domain/service/product.service';
+import { ActionConstants } from 'src/utilities/constants/action.constants';
 
 @Component({
   selector: 'app-product',
@@ -9,17 +12,23 @@ import { Product } from 'src/data/interface/product.interface';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  form!: FormGroup;
+  form: any;
   submitted = false;
-  id: number = 0;
+  idProduct: number = 0;
   dominio: any;
   countryFilter: any;
   productArray: Product[];
-  module: string;
+  productSingle: Product;
+  module: ActionConstants | undefined;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private _productService: ProductService,
+              public _activatedRoute: ActivatedRoute
+    ) {
     this.setForm();
+    this.getActionProductForm();
     this.productArray = [];
+    this.productSingle = {} as Product;
   }
 
   setForm() {
@@ -64,6 +73,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  getActionProductForm() {
+    if (this._activatedRoute.snapshot.queryParamMap.get('action') !== ActionConstants.action.createProduct)
+    {
+      this.productArray = this._activatedRoute.snapshot.queryParamMap.get('productSend') as unknown as Product[];
+    }
+  }
+
   ngOnInit(): void {
     this.setForm();
   }
@@ -72,34 +88,59 @@ export class ProductComponent implements OnInit {
     return this.form.controls;
   }
 
+  loadInit(): void {
+    if (this.module == "UpdateProduct")
+    {
+      this._productService.getProductsId(this.idProduct).subscribe({
+        next: (res) => { 
+          if (res !== null) { this.productArray = res as Product[]; }
+        },
+        error: (e) => alert('Se presentó un error al consultar los datos del producto.'),
+        complete: () => console.info('complete') 
+        });
+    }
+  }
+
   onSubmit() {
     this.submitted = true;
-
     if (this.form.invalid) {
       return;
     }
+    this.productSingle = {} as Product;
+    this.productSingle.name = this.form.get('name').value.value;
+    this.productSingle.inInventory = this.form.get('inInventory').value.value;
+    this.productSingle.min = this.form.get('min').value.value;
+    this.productSingle.max = this.form.get('max').value.value;
+    this.productSingle.enabled = this.form.get('enabled').value.value;
 
-    if (this.module == "CreateProduct")
+    if (this.module === ActionConstants.action.createProduct)
     {
-      
+      this._productService.createProduct(this.productSingle).subscribe({
+        next: (res) => alert('Registro creado exitosamente'),
+        error: (e) => alert('Se presentó un error al crear el Producto'),
+        complete: () => console.info('complete') 
+        });
     }
-    /*this.productService.getProduct().subscribe(data => {
-      this.productArray = data as Product[]
-    });
-
-
-    let employeeEnd: EmployeeClass = new EmployeeClass(this.id, this.form.get('identificationCard').value.value,
-    this.form.get('firstName').value,this.form.get('lastName').value.value, 
-    this.form.get('otherName').value.value, this.form.get('email').value.value, this.dominio);
-
-    this._employeeService.saveEmployee(employeeEnd).subscribe(
-      res => {
-        alert('Registro creado exitosamente');
-      },
-      () => {
-        alert('Se presentó un error al crear el Empleado');
+    else {
+      if (this.module === ActionConstants.action.updateProduct)
+      {
+        this._productService.updateProduct(this.productSingle).subscribe({
+          next: (res) => alert('Registro actualizado exitosamente'),
+          error: (e) => alert('Se presentó un error al actualizar el Producto'),
+          complete: () => console.info('complete') 
+          });
+      } 
+      else {
+        if (this.module === ActionConstants.action.deleteProduct)
+        {
+          this._productService.deleteProduct(this.productSingle.id).subscribe({
+            next: (res) => alert('Registro eliminado exitosamente'),
+            error: (e) => alert('Se presentó un error al eliminar el Producto'),
+            complete: () => console.info('complete') 
+            });
+        }
       }
-    );*/
+    }
   }
 
   onReset(): void {

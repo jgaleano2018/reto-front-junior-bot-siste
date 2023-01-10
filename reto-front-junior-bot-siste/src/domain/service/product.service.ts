@@ -20,39 +20,51 @@ export class ProductService {
    * Este método devuelve la lista de productos
    * @returns Rerorna un array con la lista de productos
    */
-  public getProducts(): Observable<Product> {
+  public getProducts(): Observable<Product[]> {
     const params = new HttpParams()
-    return this._httpClient.get<Product>('http://localhost:4200/Products', { params });
+    return this._httpClient.get<Product[]>('http://localhost:4200/Products', { params });
   }
 
   /**
-   * Este método recibe el número de identificación del Cliente y el tipo de documento para consultar los créditos del Cliente.
-   * @param id Número del documento del Cliente.
-   * @param idType Tipo de documento del Cliente.
-   * @returns Rerorna la respuesta del set de datos de los créditos del Cliente.
+   * Este método recibe el id del producto.
+   * @param id Id del producto
+   * @returns Rerorna el array de con los datos del producto.
    */
-  public getProductsId(id: string): Observable<ProductClass> {
+  public getProductsId(id: number): Observable<Product[]> {
     const params = new HttpParams()
       .set('id', id);
-    return this._httpClient.get<ProductClass>('http://localhost:4200/Product/{id}', { params });
+    return this._httpClient.get<Product[]>('http://localhost:4200/Product/{id}', { params });
   }
 
   /**
-   * En este método se recibe el modelo de los compromisos generados y se guarda las observaciones de la gestión de los compromisos del Cliente.
-   * @param dataRequest Modelo con los compromisos generados.
-   * @returns Retorna la respuesta de la gestión del guardado de las observaciones de los compromisos.
+   * En este método se recibe el modelo del producto que se desea crear.
+   * @param dataRequest Modelo con los datos del producto.
+   * @returns Retorna true o false de acuerdo al procesamiento del registro.
    */
-  public saveProduct(dataRequest: ProductClass) {
-    return this._httpClient.post<ProductClass>('http://localhost:4200/Product', dataRequest);
+  public createProduct(dataRequest: Product) {
+    return this._httpClient.post<Boolean>('http://localhost:4200/CreateProductAsync', dataRequest);
   }
 
-    /**
-   * En este método se recibe el modelo de los compromisos generados y se guarda las observaciones de la gestión de los compromisos del Cliente.
-   * @param dataRequest Modelo con los compromisos generados.
-   * @returns Retorna la respuesta de la gestión del guardado de las observaciones de los compromisos.
+  /**
+   * En este método se recibe el modelo del producto que se desea actualizar.
+   * @param dataRequest Modelo con los datos del producto.
+   * @returns Retorna true o false de acuerdo al procesamiento del registro.
    */
-    public deleteProduct(idProduct: any) {
-      return this._httpClient.delete('http://localhost:4200/Product/'+idProduct);
+   public updateProduct(dataRequest: Product) {
+    let query = {
+      'id': dataRequest.id,
+      'product': dataRequest
+    }
+    return this._httpClient.put<Boolean>('http://localhost:4200/UpdateProductAsync', query);
+   }
+
+    /**
+   * En este método se recibe el modelo del producto que se desea eliminar.
+   * @param dataRequest Modelo con los datos del producto.
+   * @returns Retorna true o false de acuerdo al procesamiento del registro.
+   */
+    public deleteProduct(idProduct: number) {
+      return this._httpClient.delete('http://localhost:4200/DeleteProductAsync/'+idProduct);
     }
   
 }
