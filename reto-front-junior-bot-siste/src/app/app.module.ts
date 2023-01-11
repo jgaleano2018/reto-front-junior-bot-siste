@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeShopModule } from 'src/presentation/home-shop/home-shop.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: 'home-shop', component: HomeShopComponent },
@@ -40,13 +41,14 @@ const routes: Routes = [
     MatInputModule,
     MatPaginatorModule,
     MatIconModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
   exports: [ MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    MatPaginatorModule],
+    MatPaginatorModule, MatButtonModule],
   providers: [],
   bootstrap: [AppComponent]
 })

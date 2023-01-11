@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 /**
  * Modulo que registra los submodulos que se importan desde el component ProductComponent.
@@ -22,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressSpinnerModule,
     MatInputModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule, MatButtonModule
   ],
   exports: [HomeShopComponent]
 })
