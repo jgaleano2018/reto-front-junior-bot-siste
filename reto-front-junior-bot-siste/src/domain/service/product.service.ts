@@ -22,7 +22,7 @@ export class ProductService {
    */
   public getProducts(): Observable<Product[]> {
     const params = new HttpParams()
-    return this._httpClient.get<Product[]>('http://localhost:4200/Products', { params });
+    return this._httpClient.get<Product[]>('https://localhost:7174/api/Product', { params });
   }
 
   /**
@@ -33,7 +33,7 @@ export class ProductService {
   public getProductsId(id: number): Observable<Product[]> {
     const params = new HttpParams()
       .set('id', id);
-    return this._httpClient.get<Product[]>('http://localhost:4200/Product/{id}', { params });
+    return this._httpClient.get<Product[]>('https://localhost:7174/api/Product/{id}', { params });
   }
 
   /**
@@ -42,7 +42,7 @@ export class ProductService {
    * @returns Retorna true o false de acuerdo al procesamiento del registro.
    */
   public createProduct(dataRequest: Product) {
-    return this._httpClient.post<Boolean>('http://localhost:4200/CreateProductAsync', dataRequest);
+    return this._httpClient.post<Boolean>('https://localhost:7174/api/Product', dataRequest);
   }
 
   /**
@@ -55,7 +55,7 @@ export class ProductService {
       'id': dataRequest.id,
       'product': dataRequest
     }
-    return this._httpClient.put<Boolean>('http://localhost:4200/UpdateProductAsync', query);
+    return this._httpClient.put<Boolean>('https://localhost:7174/api/Product/{id}', query);
    }
 
     /**
@@ -64,7 +64,7 @@ export class ProductService {
    * @returns Retorna true o false de acuerdo al procesamiento del registro.
    */
     public deleteProduct(idProduct: number) {
-      return this._httpClient.delete('http://localhost:4200/DeleteProductAsync/'+idProduct);
+      return this._httpClient.delete('https://localhost:7174/api/Product/'+idProduct);
     }
   
 }

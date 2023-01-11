@@ -66,9 +66,7 @@ export class ProductComponent implements OnInit {
             Validators.maxLength(20),
           ]
         ],
-       
-        confirmPassword: ['', Validators.required],
-        acceptTerms: [false, Validators.requiredTrue]
+        enabled: ['', Validators.required]
       }
     );
   }
@@ -102,16 +100,17 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmit() {
+    //this.module = ActionConstants.action.createProduct;
     this.submitted = true;
     if (this.form.invalid) {
       return;
     }
     this.productSingle = {} as Product;
-    this.productSingle.name = this.form.get('name').value.value;
-    this.productSingle.inInventory = this.form.get('inInventory').value.value;
-    this.productSingle.min = this.form.get('min').value.value;
-    this.productSingle.max = this.form.get('max').value.value;
-    this.productSingle.enabled = this.form.get('enabled').value.value;
+    this.productSingle.name = this.form.get('name').value;
+    this.productSingle.inInventory = this.form.get('inInventory').value;
+    this.productSingle.min = this.form.get('min').value;
+    this.productSingle.max = this.form.get('max').value;
+    this.productSingle.enabled = this.form.get('enabled').value;
 
     if (this.module === ActionConstants.action.createProduct)
     {
